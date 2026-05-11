@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plano - لوحة إدارة مهامك اليومية">
+    <title>Plano - لوحة المهام</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <style>
+        /* ===== PROGRESS BAR عرض كامل ===== */
+        .progress-article {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            padding: 1.25rem 2rem;
+        }
+        .progress-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        progress {
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            border: none;
+            background: var(--bg-elevated);
+            overflow: hidden;
+            appearance: none;
+            -webkit-appearance: none;
+            display: block;
+        }
+       progress::-webkit-progress-value { background: linear-gradient(90deg, var(--accent), var(--pink)) !important; border-radius: 999px; }
+       progress::-moz-progress-bar      { background: linear-gradient(90deg, var(--accent), var(--pink)) !important; border-radius: 999px; }
+        /* ===== TASK CARDS ===== */
+        .task-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 0.9rem 1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-xs);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            list-style: none;
+        }
+        .task-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: var(--border-mid); }
+
+        .task-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
+        .task-card-title { font-size: 0.87rem; font-weight: 700; color: var(--text-dark); line-height: 1.4; flex: 1; }
+
+        .task-delete-btn {
+            background: none; border: 1px solid var(--border); cursor: pointer;
+            color: var(--text-muted); font-size: 0.7rem;
+            width: 20px; height: 20px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); flex-shrink: 0; padding: 0;
+            font-family: var(--font-main);
+        }
+        .task-delete-btn:hover { background: var(--pink-light); color: var(--pink-dark); border-color: var(--pink-mid); }
+
+        .task-card-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+        .task-badge { font-size: 0.7rem; font-weight: 700; padding: 2px 9px; border-radius: var(--radius-xl); }
+        .badge-work  { background: var(--badge-work-bg);  color: var(--badge-work-fg); }
+        .badge-home  { background: var(--badge-home-bg);  color: var(--badge-home-fg); }
+        .badge-goals { background: var(--badge-goals-bg); color: var(--badge-goals-fg); }
+        .badge-appt  { background: #fdf6e8; color: #9a6f2a; }
+        .badge-uni   { background: #e8f0fb; color: #1a56c4; }
+        .badge-other { background: var(--badge-other-bg); color: var(--badge-other-fg); }
+
+        .task-date { font-size: 0.7rem; color: var(--text-muted); display: flex; align-items: center; gap: 3px; }
+
+        /* ===== أزرار دوائر أيقونة فقط ===== */
+        .task-card-actions { display: flex; gap: 0.4rem; padding-top: 0.4rem; border-top: 1px solid var(--border-soft); }
+
+        .action-btn {
+            width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 13px; background: none; transition: var(--transition);
+            font-family: var(--font-main); position: relative;
+        }
+        .action-btn:hover { transform: scale(1.12); }
+        .action-btn::after {
+            content: attr(title); position: absolute; bottom: 34px;
+            right: 50%; transform: translateX(50%);
+            background: var(--text-dark); color: #fff;
+            font-size: 0.68rem; padding: 3px 8px; border-radius: 6px;
+            white-space: nowrap; opacity: 0; pointer-events: none;
+            transition: opacity 0.15s; font-family: var(--font-main);
+        }
+        .action-btn:hover::after { opacity: 1; }
+
+        .btn-doing { color: var(--accent-dark); border-color: #d4c5f0; background: var(--accent-light); }
+        .btn-doing:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+        .btn-done { color: var(--mint-dark); border-color: #b5dfd7; background: var(--mint-light); }
+        .btn-done:hover { background: var(--mint-dark); color: #fff; border-color: var(--mint-dark); }
+
+        .btn-todo { color: var(--pink-dark); border-color: #f7c8c4; background: var(--pink-light); }
+        .btn-todo:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            display: flex; align-items: center; justify-content: center;
+            padding: 2rem 1rem; color: var(--text-muted); font-size: 0.8rem;
+            font-style: italic; border: 1.5px dashed var(--border-mid);
+            border-radius: var(--radius-sm); background: rgba(255,255,255,0.5);
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo"><span class="logo-text">Pl<span>a</span>no</span></div>
+            <nav aria-label="التنقل الرئيسي">
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="dashboard.html" class="active">لوحة المهام</a></li>
+                    <li><a href="about-us.html">من نحن</a></li>
+                    <li><a href="contact-us.html">تواصل معنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- الإحصائيات -->
+        <article class="stats-article">
+            <h2 class="sr-only">إحصائيات المهام</h2>
+            <div class="stats-grid">
+                <div class="stat-card stat-total">
+                    <span class="stat-number" id="stat-total">0</span>
+                    <span class="stat-label">إجمالي المهام</span>
+                </div>
+                <div class="stat-card stat-todo">
+                    <span class="stat-number" id="stat-todo">0</span>
+                    <span class="stat-label">لم تبدأ</span>
+                </div>
+                <div class="stat-card stat-doing">
+                    <span class="stat-number" id="stat-doing">0</span>
+                    <span class="stat-label">جارية</span>
+                </div>
+                <div class="stat-card stat-done">
+                    <span class="stat-number" id="stat-done">0</span>
+                    <span class="stat-label">مكتملة</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- Progress Bar عرض كامل -->
+        <article class="progress-article">
+            <div class="progress-top-row">
+                <span class="progress-label">نسبة الإنجاز</span>
+                <span id="progress-percent" style="font-size:0.85rem;font-weight:800;color:var(--accent);">0%</span>
+            </div>
+            <progress id="progress-bar" value="0" max="100"></progress>
+        </article>
+
+        <!-- فورم إضافة مهمة -->
+        <article class="add-task-article">
+            <h2>+ إضافة مهمة جديدة</h2>
+            <form id="task-form" novalidate>
+                <div class="task-form-grid">
+                    <div class="form-group">
+                        <label for="task-name">اسم المهمة <span class="required">*</span></label>
+                        <input type="text" id="task-name" name="task_name" placeholder="اسم المهمة..." required maxlength="80" aria-describedby="task-name-error">
+                        <span class="error-msg" id="task-name-error" role="alert"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-category">الفئة</label>
+                        <select id="task-category" name="task_category">
+                            <option value="">-- الفئة --</option>
+                            <option value="work">💼 شغل</option>
+                            <option value="home">🏠 بيت</option>
+                            <option value="goals">⭐ أهداف</option>
+                            <option value="appointments">📅 مواعيد</option>
+                            <option value="university">🎓 جامعة</option>
+                            <option value="other">📌 أخرى</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-deadline">الموعد النهائي</label>
+                        <input type="date" id="task-deadline" name="task_deadline">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">إضافة ←</button>
+                    <button type="reset" class="reset-btn">مسح</button>
+                </div>
+            </form>
+        </article>
+
+        <!-- لوحة Kanban -->
+        <article class="kanban-article">
+            <h2>لوحة المهام</h2>
+            <div class="kanban-board">
+
+                <div class="kanban-column column-todo" id="col-todo" role="region" aria-label="مهام لم تبدأ">
+                    <div class="column-header">
+                        <h3>لم تبدأ</h3>
+                        <span class="column-count" id="count-todo">0</span>
+                    </div>
+                    <ul class="task-list" id="list-todo">
+                        <li class="empty-state"><span>لا توجد مهام بعد</span></li>
+                    </ul>
+                </div>
+
+                <div class="kanban-column column-doing" id="col-doing" role="region" aria-label="مهام جارية">
+                    <div class="column-header">
+                        <h3>جارية</h3>
+                        <span class="column-count" id="count-doing">0</span>
+                    </div>
+                    <ul class="task-list" id="list-doing">
+                        <li class="empty-state"><span>لا توجد مهام بعد</span></li>
+                    </ul>
+                </div>
+
+                <div class="kanban-column column-done" id="col-done" role="region" aria-label="مهام مكتملة">
+                    <div class="column-header">
+                        <h3>مكتملة</h3>
+                        <span class="column-count" id="count-done">0</span>
+                    </div>
+                    <ul class="task-list" id="list-done">
+                        <li class="empty-state"><span>لا توجد مهام بعد</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </article>
+
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - Plano</p>
+    </footer>
+
+    <script src="/js/validation.js"></script>
+    <script src="/js/kanban.js"></script>
+    <script src="/js/deadline-alert.js"></script>
+    <script src="/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+/* =============================================
+   Plano — responsive.css  ✦ نسخة محدّثة
+   ============================================= */
+
+@media (max-width: 992px) {
+    .features-list   { grid-template-columns: 1fr 1fr; }
+    .stats-grid      { grid-template-columns: 1fr 1fr; }
+    .task-form-grid  { grid-template-columns: 1fr 1fr; }
+    .team-cards-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+    main { padding: 0 1.25rem; margin: 1.25rem auto; }
+    header { padding: 0 1rem; }
+    .header-inner { flex-wrap: wrap; gap: 0.5rem; }
+
+    nav ul { gap: 0.15rem; }
+    nav ul li a { padding: 0.4rem 0.9rem; font-size: 0.82rem; }
+
+    .hero-inner { flex-direction: column; }
+
+    .features-list   { grid-template-columns: 1fr 1fr; }
+    .stats-grid      { grid-template-columns: 1fr 1fr; }
+    .task-form-grid  { grid-template-columns: 1fr; }
+    .team-cards-grid { grid-template-columns: 1fr; }
+    .kanban-board    { grid-template-columns: 1fr; }
+
+    .team-table, .tasks-table { font-size: 0.82rem; }
+    .team-table th, .tasks-table th,
+    .team-table td, .tasks-table td { padding: 9px 10px; }
+
+    .intro-article, .features-article, .about-intro,
+    .team-article, .tasks-division, .contact-intro,
+    .form-article, .stats-article, .add-task-article,
+    .kanban-article { padding: 1.5rem; }
+
+    h1 { font-size: 1.65rem; }
+    .hero-text h2 { font-size: 1.9rem; }
+}
+
+@media (max-width: 576px) {
+    .features-list   { grid-template-columns: 1fr; }
+    .stats-grid      { grid-template-columns: 1fr 1fr; }
+    .team-cards-grid { grid-template-columns: 1fr; }
+    .logo-text       { font-size: 1.4rem; }
+    nav ul li a      { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
+    .form-actions    { flex-direction: column; }
+    .submit-btn, .reset-btn { width: 100%; text-align: center; }
+    .team-table, .tasks-table { display: block; overflow-x: auto; }
+    article.progress-article { flex-wrap: wrap; }
+}
