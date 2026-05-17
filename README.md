@@ -8,7 +8,6 @@
 
 <p align="center">
   <!-- 🔗 Live Demo: replace # with your deployment URL once deployed -->
-  <a href="#"><strong>🌐 Live Demo</strong></a> ·
   <a href="#-getting-started">Getting Started</a> ·
   <a href="#-api-endpoints">API Docs</a>
 </p>
