@@ -281,7 +281,7 @@ This project was built collaboratively by:
 
 | Name |
 |------|
-| **da6h**| 
+| **Danh**| 
 | **Banan Fadhel**|
 | **Aroub Fattani**|
 
