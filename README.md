@@ -3,13 +3,13 @@
 > A bilingual-ready (Arabic-first, RTL) task management web application with an interactive Kanban board, real-time progress tracking, and deadline alerts.
 
 <p align="center">
-  <img src="media/home.jpg" alt="Plano Preview" width="600"/>
+  <img src="screenshots/01-home.png" alt="Plano Preview" width="800"/>
 </p>
 
 <p align="center">
-  <!-- 🔗 Live Demo: replace # with your deployment URL once deployed -->
   <a href="#-getting-started">Getting Started</a> ·
-  <a href="#-api-endpoints">API Docs</a>
+  <a href="#-api-endpoints">API Docs</a> ·
+  <a href="#-screenshots">Screenshots</a>
 </p>
 
 ---
@@ -37,6 +37,42 @@ The project demonstrates end-to-end web development skills: semantic HTML, respo
 
 ---
 
+## 📸 Screenshots
+
+### 🏠 Landing Page
+
+A clean, RTL-aware landing page introducing the app and its features.
+
+<p align="center">
+  <img src="screenshots/01-home.png" alt="Landing Page" width="800"/>
+</p>
+
+### 🗂️ Kanban Dashboard
+
+The main workspace — three columns showing task progress, with a live completion percentage bar and category-colored task cards.
+
+<p align="center">
+  <img src="screenshots/02-dashboard.png" alt="Kanban Dashboard" width="800"/>
+</p>
+
+### 📝 Contact Form
+
+A fully validated contact form supporting multiple languages.
+
+<p align="center">
+  <img src="screenshots/03-contact.png" alt="Contact Form" width="800"/>
+</p>
+
+### 🛡️ Form Validation in Action
+
+Real-time validation feedback — required fields, format checks (email, Saudi mobile, names), and clear error messages guide the user.
+
+<p align="center">
+  <img src="screenshots/04-validation.png" alt="Form Validation" width="800"/>
+</p>
+
+---
+
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -61,7 +97,7 @@ Plano/
 ├── backend/
 │   ├── server.js              # Express server + REST API endpoints
 │   ├── package.json           # Backend dependencies
-│   └── node_modules/
+│   └── package-lock.json
 ├── css/
 │   ├── style.css              # Main stylesheet (design system + components)
 │   └── responsive.css         # Media queries for tablet/mobile
@@ -77,6 +113,8 @@ Plano/
 │   ├── deadline-alert.js      # Deadline checking and alerts
 │   └── contact.js             # Contact form submission
 ├── media/                     # Images and assets
+├── screenshots/               # Project screenshots
+├── .gitignore
 └── README.md
 ```
 
@@ -89,7 +127,7 @@ Plano/
 Before running the project, make sure you have:
 
 - **[Node.js](https://nodejs.org/)** (v16 or newer)
-- **[MySQL](https://www.mysql.com/)** (v8 or newer) running locally
+- **[MySQL](https://www.mysql.com/)** (v8 or newer) running locally — or **XAMPP** / **WAMP** which include MySQL
 - **npm** (comes with Node.js)
 
 ### Installation
@@ -110,7 +148,7 @@ npm install
 
 **3. Set up the database**
 
-Open MySQL and run the following SQL to create the database and tables:
+Open MySQL (or phpMyAdmin if using XAMPP) and run the following SQL:
 
 ```sql
 CREATE DATABASE plano_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -142,16 +180,7 @@ CREATE TABLE contacts (
 
 **4. Configure database credentials**
 
-Open `backend/server.js` and update the connection settings if needed:
-
-```javascript
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",        // your MySQL username
-    password: "",        // your MySQL password
-    database: "plano_db"
-});
-```
+Open `backend/server.js` and adjust the connection settings to match your local MySQL setup (host, user, password, and database name).
 
 **5. Run the server**
 
@@ -231,16 +260,6 @@ This makes the design easy to maintain and extend.
 
 ---
 
-## 📸 Screenshots
-
-> *Add screenshots here once deployed:*
-> - Landing page
-> - Kanban dashboard with tasks
-> - Contact form
-> - Mobile responsive view
-
----
-
 ## 🧪 What I Learned
 
 Building Plano gave me hands-on experience with:
@@ -251,6 +270,7 @@ Building Plano gave me hands-on experience with:
 - Building responsive, RTL-aware layouts from scratch
 - Managing state in vanilla JavaScript without a framework
 - Structuring a small full-stack project cleanly
+- Collaborating with a team using Git and GitHub
 
 ---
 
@@ -263,8 +283,18 @@ Things I'd like to add next:
 - [ ] Task editing (not just delete + recreate)
 - [ ] Filtering and search by category or status
 - [ ] Dark mode toggle
-- [ ] Deployment to a cloud platform (Vercel + PlanetScale or similar)
+- [ ] Deployment to a cloud platform
 - [ ] Unit and integration tests
+
+---
+
+## 👥 Team
+
+This project was built collaboratively by:
+
+- **Danh** 
+- **Banan Fadhel** 
+- **Aroub Fattani**
 
 ---
 
@@ -274,14 +304,4 @@ This project is available for educational and portfolio purposes.
 
 ---
 
-## 👥 Team
-
-This project was built collaboratively by:
-
-| Name |
-|------|
-| **Danh**| 
-| **Banan Fadhel**|
-| **Aroub Fattani**|
-
-If you have feedback or suggestions, feel free to open an issue or reach out!
+*If you have feedback or suggestions, feel free to open an issue or reach out!*
